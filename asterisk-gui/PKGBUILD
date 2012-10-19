@@ -1,0 +1,22 @@
+# Maintainer: Tony Lambiris <tony@libpcap.net>
+
+pkgname=asterisk-gui
+pkgver=2.1.0
+pkgrel=1
+pkgdesc="The official GUI for Asterisk PBX systems."
+arch=(i686 x86_64)
+url="http://downloads.asterisk.org/pub/telephony/asterisk-gui/releases/"
+license=('GPL')
+depends=('asterisk')
+source=(http://downloads.asterisk.org/pub/telephony/asterisk-gui/releases/$pkgname-$pkgver-rc1.tar.gz)
+md5sums=('055bf2aaba365e696198925d039ac3cb')
+
+build() {
+  cd $srcdir/$pkgname-$pkgver-rc1
+  ./configure --prefix=/usr
+  make || return 1
+  make DESTDIR="$pkgdir" install
+  make checkconfig
+}
+
+

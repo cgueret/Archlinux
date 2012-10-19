@@ -1,0 +1,32 @@
+pkgname=applesmc-fixed
+pkgver=1
+pkgrel=1
+pkgdesc='Applesmc module with a fix for recent MacBook'
+arch=('i686' 'x86_64')
+url='http://www.grimsby.us/?p=123'
+license=('custom')
+depends=('linux=3.5.3')
+makedepends=('linux-headers=3.5.3')
+
+[[ $CARCH = x86_64 ]] && ARCH=x86_64 || ARCH=x86_32
+source=('fix.patch')
+
+install=applesmc-fixed.install
+
+_extramodules=extramodules-3.5-ARCH
+_kernver="$(cat /lib/modules/${_extramodules}/version)"
+
+build() {
+	cd "${srcdir}"
+	patch -p1 -i fix.patch
+	make -C /lib/modules/"${_kernver}"/build M=`pwd` applesmc.ko
+}
+
+package() {
+	cd "${srcdir}"
+	install -D -m 644 applesmc.ko "${pkgdir}/lib/modules/${_extramodules}/applesmc.ko"
+	gzip "${pkgdir}/lib/modules/${_extramodules}/applesmc.ko"
+	install -D -m 644 modprobe.d "${pkgdir}"/etc/modprobe.d/applesmc-fixed.conf
+}
+
+

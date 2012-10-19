@@ -1,0 +1,34 @@
+# Maintainer: Christophe Gueret <christophe.gueret@gmail.com>
+# Contributors: d'Ronin <daronin@2600.com>
+# Contributors: judfilm <jud@judfilm.net>
+
+pkgname=freepbx
+pkgver=2.9.0
+pkgrel=1
+pkgdesc="Full-featured PBX web application for Asterisk"
+url="http://www.freepbx.org/"
+arch=('i686' 'x86_64')
+license=('GPL')
+depends=('alsa-lib' 'speex' 'popt' 'dahdi' 'libvorbis' 'curl' 'mysql' 'asterisk' 'apache' 'php' 'perl')
+#makedepends=('unixodbc' 'sqlite3')
+install=($pkgname.install)
+source=(http://mirror.freepbx.org/$pkgname-$pkgver.tar.gz)
+md5sums=('055f9d6b0dfb7f2f22669b6caa528e0f')
+
+build() {
+	cd $srcdir/$pkgname-$pkgver
+	install -D -d -m 755 $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel
+
+	cp -r docs $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	cp -r amp_conf $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	cp -r buildtools $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	cp -r SQL $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	cp -r upgrades $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+
+	install -D -m644 LICENSE $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	install -D -m644 amportal.conf $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	install -D -m755 apply_conf.sh $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	install -D -m755 install_amp $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	install -D -m755 libfreepbx.install.php $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+	install -D -m755 setup_svn.php $pkgdir/usr/src/$pkgname-$pkgver-$pkgrel/
+}

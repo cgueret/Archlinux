@@ -1,0 +1,27 @@
+# Contributor: Leif Warner <abimelech@gmail.com>
+pkgname=4store
+pkgver=1.1.2
+pkgrel=1
+pkgdesc="A large-scale RDF store written in C"
+arch=('i686' 'x86_64')
+url="http://4store.org"
+license=('GPL')
+depends=('rasqal' 'raptor>=2.0' 'avahi')
+source=(http://4store.org/download/$pkgname-v$pkgver.tar.gz)
+md5sums=('451e52505ee2a96400e99b896eecf87a')
+
+build() {
+  cd "$srcdir/$pkgname-v$pkgver"
+
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-v$pkgver"
+
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:
+
