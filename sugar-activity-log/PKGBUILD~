@@ -1,0 +1,22 @@
+# Maintainer: Christophe Gueret <christophe.gueret@gmail.com>
+
+pkgname=sugar-activity-log
+_xoname="Log"
+pkgver=36
+pkgrel=1
+pkgdesc="A log viewer Sugar"
+arch=('any')
+url="http://www.sugarlabs.org/"
+license=('GPL')
+groups=('fructose')
+depends=('sugar')
+source=(http://download.sugarlabs.org/sources/sucrose/fructose/${_xoname}/${_xoname}-${pkgver}.tar.bz2)
+md5sums=('4898d4aadd95bd103635d341347401c5')
+
+
+build() {
+  cd "$srcdir/${_xoname}-${pkgver}"
+  python2 setup.py install --prefix="$pkgdir/usr" || return 1
+}
+
+

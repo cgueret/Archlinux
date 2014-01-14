@@ -1,0 +1,21 @@
+# Maintainer: Christophe Gueret <christophe.gueret@gmail.com>
+# Contributor: Cilyan Olowen <gaknar@gmail.com>
+
+pkgname=sugar-activity-etoys
+pkgver=116
+pkgrel=1
+_realname=Etoys
+pkgdesc="Etoys for Sugar"
+arch=('i686' 'x86_64')
+url="http://www.sugarlabs.org/"
+license=('GPL')
+groups=('fructose')
+depends=('sugar' 'etoys')
+source=(http://download.sugarlabs.org/sources/sucrose/fructose/${_realname}/${_realname}-$pkgver.tar.bz2)
+md5sums=('5484a94da69aa6aa4bc8d13a49f51566')
+
+build() {
+  cd "$srcdir/${_activityname}.activity"
+  python2 setup.py install --prefix="$pkgdir/usr" || return 1
+}
+

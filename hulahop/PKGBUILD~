@@ -8,7 +8,7 @@ pkgdesc="Widget for embedding a Mozilla browser"
 url="http://git.sugarlabs.org/projects/hulahop"
 arch=('i686' 'x86_64')
 license=('LGPL')
-depends=('xulrunner192>=1.9.1.3-2' 'pygtk')
+depends=('xulrunner>=1.9.1.3-2' 'pygtk')
 groups=('sugar-desktop' 'glucose')
 source=(http://download.sugarlabs.org/sources/sucrose/glucose/$pkgname/$pkgname-$pkgver.tar.bz2 fix_idl.patch)
 md5sums=('68537d140ef44a9649a461e3a7c500ac'

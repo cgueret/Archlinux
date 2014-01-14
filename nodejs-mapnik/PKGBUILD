@@ -1,0 +1,29 @@
+# Author: Dane Springmeyer <dane@dbsgeo.com> (mapnik.org)
+# Contributor: Konstantin Käfer
+# Maintainer: springmeyer <dane@dbsgeo.com>
+# Maintainer: kkaefer <kkaefer@gmail.com>
+# Maintainer: artem <artem@mapnik.org>
+_npmname=mapnik
+_npmver=1.1.3
+pkgname=nodejs-mapnik # All lowercase
+pkgver=1.1.3
+pkgrel=1
+pkgdesc="Tile rendering library for node"
+arch=(any)
+url="http://mapnik.org"
+license=(BSD)
+depends=('nodejs' )
+optdepends=()
+source=(http://registry.npmjs.org/$_npmname/-/$_npmname-$_npmver.tgz)
+noextract=($_npmname-$_npmver.tgz)
+sha1sums=(bba896346befe52da3a4d67b5b527a998eaee1cf)
+
+package() {
+  cd "$srcdir"
+  local _npmdir="$pkgdir/usr/lib/node_modules/"
+  mkdir -p "$_npmdir"
+  cd "$_npmdir"
+  npm install -g --prefix "$pkgdir/usr" $_npmname@$_npmver
+}
+
+# vim:set ts=2 sw=2 et:

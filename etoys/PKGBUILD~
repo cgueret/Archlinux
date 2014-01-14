@@ -13,7 +13,7 @@ groups=('sucrose' 'glucose')
 depends=('sugar' 'squeak-vm' 'shared-mime-info')
 install=etoys.install
 source=(http://download.sugarlabs.org/sources/sucrose/glucose/${pkgname}/${pkgname}-${_realver}.tar.gz)
-md5sums=('c79ee59d8e100cfc2934af8da90519b5')
+md5sums=('c264abf4f533397b89f0628daf43f04b')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"

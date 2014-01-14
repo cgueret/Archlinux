@@ -20,10 +20,10 @@ build() {
   PYTHON=python2 ./configure --prefix=/usr
   
   # python2 fix (taken from pyrss PKGBUILD)
-  #for file in $(find . -name '*.py' -print); do
-  #      sed -i 's_^#!.*/usr/bin/python_#!/usr/bin/python2_' $file
-  #      sed -i 's_^#!.*/usr/bin/env.*python_#!/usr/bin/env python2_' $file
-  #done
+  for file in $(find . -name '*.py' -print); do
+        sed -i 's_^#!.*/usr/bin/python_#!/usr/bin/python2_' $file
+        sed -i 's_^#!.*/usr/bin/env.*python_#!/usr/bin/env python2_' $file
+  done
 
   make
 }

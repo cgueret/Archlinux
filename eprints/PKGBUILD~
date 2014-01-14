@@ -1,0 +1,27 @@
+# Contributor: Leif Warner <abimelech@gmail.com>
+pkgname=eprints
+pkgver=3.3.12
+pkgrel=1
+pkgdesc="ePrints"
+arch=('i686' 'x86_64')
+url="http://www.eprints.org/"
+license=('GPL')
+depends=('mod_perl' 'perl-dbi' 'perl-dbd-mysql')
+source=(http://files.eprints.org/867/1/$pkgname-$pkgver.tar.gz)
+md5sums=('8ddc956596bdd49b126a4f70b1425122')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  ./configure --prefix=/opt/eprints3
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:
+
