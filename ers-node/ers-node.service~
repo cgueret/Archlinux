@@ -1,0 +1,19 @@
+[Unit]
+Description=ERS Node service
+Requires=couchdb.service
+After=couchdb.service
+
+[Service]
+User=root
+Group=root
+Type=simple
+StandardOutput=journal
+StandardError=journal
+Restart=always
+StartLimitInterval=10
+StartLimitBurst=5
+ExecStart=/usr/bin/python2 -m ers.daemon --pidfile=none --logtype=syslog
+
+[Install]
+WantedBy=multi-user.target
+
