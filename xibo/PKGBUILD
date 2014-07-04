@@ -1,0 +1,39 @@
+# $Id$
+# Maintainer: Christophe Gueret <christophe.gueret@gmail.com>
+
+pkgname=xibo
+pkgver=1.4.2
+pkgrel=1
+pkgdesc="A PHP-based digital signage platform - server part"
+arch=('any')	
+url="http://xibo.org.uk/"
+license=('GPL')
+depends=('php' 'php-gd' 'apache' 'mariadb-clients')
+install='xibo.install'
+options=(!strip emptydirs)
+#backup=(etc/webapps/xibo/.htaccess)
+source=(https://launchpad.net/$pkgname/1.4/$pkgver/+download/xibo-server-142.2.tar.gz)
+md5sums=('ac1d9b97f91ba0bbbc9f70ec903e8ffd')
+
+package() {
+	# copy content
+	install -d "$pkgdir/usr/share/webapps/xibo"
+	cp -r $srcdir/xibo-server-142/* "$pkgdir/usr/share/webapps/xibo"
+
+	# library directory
+	install -d "$pkgdir/var/lib/xibo"
+
+	# apache config example
+	install -d "$pkgdir/etc/webapps/xibo"
+	cat >$pkgdir/etc/webapps/xibo/apache.example.conf <<EOF
+		Alias /xibo "/usr/share/webapps/xibo"
+		<Directory "/usr/share/webapps/xibo">
+			AllowOverride All
+			Options FollowSymlinks
+			Order allow,deny
+			Allow from all
+			php_admin_value open_basedir "/srv/:/tmp/:/usr/share/webapps/:/etc/webapps:/usr/share/pear/:/var/lib/xibo"
+		</Directory>
+EOF
+}
+

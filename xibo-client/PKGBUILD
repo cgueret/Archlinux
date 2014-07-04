@@ -1,0 +1,42 @@
+# $Id$
+# Maintainer: Christophe Gueret <christophe.gueret@gmail.com>
+# build script based on https://launchpad.net/xibo/1.6/1.6.0-rc1/+download/xibo-1.6.0-ubuntu.all-pyclient.sh
+
+pkgname=xibo-client
+pkgver=1.6
+pkgrel=1
+pkgdesc="A PHP-based digital signage platform - client part"
+arch=('any')	
+url="http://xibo.org.uk/"
+license=('GPL')
+# libboost-python1.46.1 libboost-thread1.46.1
+makedepends=('bzr')
+depends=('libxss' 'glade-gtk2' 'boost-libs' 'libdc1394' 'gtk2' 'ffmpeg' 'python2-soappy' 'python2-feedparser' 'python2-pyserial' 'flashplugin' 'sdl' 'libvdpau')
+install='xibo.install'
+options=(!strip emptydirs)
+#backup=(etc/webapps/xibo/.htaccess)
+source=(https://launchpad.net/$pkgname/1.4/$pkgver/+download/xibo-server-142.2.tar.gz)
+md5sums=('ac1d9b97f91ba0bbbc9f70ec903e8ffd')
+
+package() {
+	# copy content
+	install -d "$pkgdir/usr/share/webapps/xibo"
+	cp -r $srcdir/xibo-server-142/* "$pkgdir/usr/share/webapps/xibo"
+
+	# library directory
+	install -d "$pkgdir/var/lib/xibo"
+
+	# apache config example
+	install -d "$pkgdir/etc/webapps/xibo"
+	cat >$pkgdir/etc/webapps/xibo/apache.example.conf <<EOF
+		Alias /xibo "/usr/share/webapps/xibo"
+		<Directory "/usr/share/webapps/xibo">
+			AllowOverride All
+			Options FollowSymlinks
+			Order allow,deny
+			Allow from all
+			php_admin_value open_basedir "/srv/:/tmp/:/usr/share/webapps/:/etc/webapps:/usr/share/pear/:/var/lib/xibo"
+		</Directory>
+EOF
+}
+

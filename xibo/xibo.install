@@ -1,0 +1,18 @@
+post_install() {
+  echo "Remember that you need a mysql server for this package to work."
+  if [[ ! `grep "^extension=mysql.so" /etc/php/php.ini` ]]
+	then echo "If you use mysql you should enable its module by adding the line:"
+	echo "   extension=mysql.so"
+	echo "to your /etc/php/php.ini, otherwise xibo won't work."
+  fi
+  if [[ ! `grep "^extension=gd.so" /etc/php/php.ini` ]]
+	then echo "You should enable GD by adding the line:"
+	echo "   extension=gd.so"
+	echo "to your /etc/php/php.ini, otherwise xibo won't work."
+  fi
+  chown -R http:http var/lib/xibo
+}
+
+post_upgrade() {
+  chown -R http:http var/lib/xibo
+}
